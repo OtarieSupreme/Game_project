@@ -6,9 +6,18 @@ from pygame.locals import *
 
 pygame.init()
 
-#class block :
+class Block :
 
-#def __init__(self): #ajouter type de block
+     def __init__(self, ): #ajouter type de block
+
+        if block_ID == 1 :   
+            self.image = pygame.image.load("block.png").convert()
+        
+        self.image = pygame.transform.scale(block, (int(width/nbr_case_x), int(height/nbr_case_y)))
+
+
+
+
 
 
 map_file = "C:/Users/Gabril/Desktop/Programme/Python/Game/map.xlsx"
@@ -46,9 +55,6 @@ width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
 #position_sprite = position_sprite.move((spawn_sprite_x, spawn_sprite_y))
 position_sprite = position_sprite.move((300, 300))
 
-block = pygame.image.load("block.png").convert()
-block = pygame.transform.scale(block, (int(width/nbr_case_x), int(height/nbr_case_y)))
-
 
 
 pygame.display.flip()
@@ -56,7 +62,26 @@ pygame.display.flip()
 pygame.time.Clock().tick(60)
 pygame.key.set_repeat(40, 30)
 
+nbr_block = 0
 
+for row in range(sheet.nrows):   
+    for col in range(sheet.ncols):
+        if sheet.cell_value(row, col) == 1:
+            nbr_block =+1
+            
+
+blocks = [] # Création de la liste
+for i in (0,nbr_block-1, 1): # Création de dix éléments
+    blocks.append(Block(1))
+
+rang_block_actuel = 0            
+for row in range(sheet.nrows):  
+    for col in range(sheet.ncols):
+        if sheet.cell_value(row, col) == 1:                    
+            main.blit(blocks[rang_block_actuel].image,(taille_case_x*row,taille_case_y*col))
+            rang_block_actuel =+ 1
+            
+pygame.display.flip()
 
 
 continuer = 1
@@ -78,12 +103,7 @@ while continuer:
                 position_sprite = position_sprite.move(-3,0)
 
     
-    for row in range(sheet.nrows):
-        
-        for col in range(sheet.ncols):
-            if sheet.cell_value(row, col) == 1:
-                main.blit(block,(taille_case_x*row,taille_case_y*col))
-                pygame.display.flip() 
+ 
                 
 
 
